@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+
+  dataprint:
+    container_name: reciver
+    build: ./reciver
+    volumes:
+      - .:/app
+    ports:
+      - 8000:80
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+
+  mongo_seed:
+    image: mongo
+    links:
+      - mongodb
+    volumes:
+      - ./mongo:/mongo
+    command:
+      ./mongo/import.sh
